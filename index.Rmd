@@ -190,7 +190,7 @@ Prever valores de uma variável (resposta) em função de outra (explicativa)
 --
 ## Ideia
 
-Ajustar uma equação de reta de forma a minimizar a soma das distâncias de cada ponto à reta
+Ajustar uma equação de reta de forma a minimizar a soma do quadrado das distâncias de cada ponto à reta
 
 ---
 
@@ -277,10 +277,10 @@ dados %>% ggplot() +
   theme_bw()
 ```
 ---
-## Minimizar a soma das distâncias de cada ponto
+## Minimizar a soma do quadrado das distâncias de cada ponto
 <img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
 
-A reta da regressão (vermelha) é a melhor reta entre todas, porque a soma da _distância_ de cada ponto em relação a ela é a __menor possível__.
+A reta da regressão (vermelha) é a melhor reta entre todas, porque a soma do quadrado da _distância_ de cada ponto em relação a ela é a __menor possível__.
 <br><br>
 <img src="imgs/minimosquadrados.png" height=340 style=" display: block; margin-left: auto; margin-right: auto;"></img>
 
@@ -316,6 +316,12 @@ Plotar os dados também ajuda a visualizar e ter uma ideia de como eles se relac
 ```{r fig.align="center", fig.height=5}
 plot(x = var_explicativa, y = var_resposta)
 ```
+---
+## Suposições / hipóteses necessárias
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+### Exemplos de relações linear e não lineares
+
+<img src="imgs/linear.png" style=" display: block; margin-left: auto; margin-right: auto;"></img>
 
 ---
 ## Suposições / hipóteses necessárias
@@ -345,19 +351,110 @@ curve(dnorm(x, mean=0, sd=1), add = TRUE, col="red", lwd=2)
 <img src="imgs/heteroscedasticidade.png" style=" display: block; margin-left: auto; margin-right: auto;"></img>
 
 ---
-## Regressão linear?
-<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
-
-
-
-
-
----
 class: middle, center
 
 # Agora sim: vamos ao _RStudio_ !
 <img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
 
+---
+## Abra o RStudio e crie um novo script
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+<img src="imgs/rstudio1.png" style=" display: block; margin-left: auto; margin-right: auto;"></img>
+
+---
+## Vamos dar uma olhada nos dados
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+```{r}
+# Carregando os dados
+dados <- read.csv("dados/fifa_reduzido.csv")
+
+# Vamos dar uma olhada nas primeiras linhas
+head(dados)
+```
+---
+## Quanta coisa... Vamos ver só o nome, 'sho' e 'pas'?
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+```{r}
+dados2 <- data.frame(nome = dados$name, sho = dados$sho, pas = dados$pas)
+head(dados2)
+
+```
+---
+## Plotando sho X pas
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+```{r fig.align="center", fig.height=5}
+plot(x = dados2$pas, y = dados$sho)
+```
+Parece linear! E _homoscedástico_
+
+---
+## Adicionando a reta de regressão
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+```{r fig.align="center", fig.height=5}
+plot(x = dados2$pas, y = dados$sho)
+abline(lm(dados2$sho ~ dados2$pas), col="red")
+```
+
+---
+## Valores de __a__ e __b__
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+```{r}
+lm(dados$sho ~ dados2$pas)
+```
+--
+### Interpretação
+- __a__ (coeficiente angular): quanto a variação de `sho` influencia em `pas`
+- __b__ (intercepto): valor esperado de `sho` quando `pas` é igual a zero
+
+---
+## Alguns métodos de avaliação de qualidade do ajuste
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+- Coeficiente de determinação $R^2$
+- Gráficos de resíduos padronizados
+- Distância de Cook
+
+https://www.statmethods.net/stats/rdiagnostics.html
+
+---
+## Coeficiente de determinação $R^2$
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+$$R^2 = \frac{SQReg}{SQTot} = 1 -\frac{SQRes}{SQTot}$$
+em que <br><br>
+$SQTot = \sum_{i=1}^n (y_i - \bar y)^2$ <br>
+$SQReg = \sum{i=1}^n (\hat y_i - \bar y)^2$ <br>
+$SQRes = \sum{i=1}^n (y_i - \hat y_i)^2$
+
+--
+<br><br><br>
+<img src="imgs/what.gif" height=270 style=" display: block; margin-left: auto; margin-right: auto;"></img>
+
+---
+
+## Coeficiente de determinação $R^2$
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+O Coeficiente de determinação $R^2$ mede o quanto da variabilidade da resposta é explicada pela regressão
+
+```{r}
+fit <- lm(dados2$sho ~ dados2$pas)
+summary(fit)$r.squared
+```
+---
+## Distância de Cook
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+```{r fig.height = 5, fig.align="center"}
+plot(fit, which=4)
+```
+<br>
+Valores que se destacam no gráfico são chamados _pontos de alavanca_ e devem ser investigados
 
 ---
 ## Ex: área e valor de imóveis
@@ -370,8 +467,17 @@ t2 <- dados %>% tail(10)
 knitr::kable(list(t1,t2), format = "html")
 
 ```
-
 ---
+class: middle, center
+## Tentem ajustar uma reta de regressão no R!
+
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+arquivo `imob.csv`
+---
+## Regressão linear: preço e área de imóveis
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
 ```{r echo=FALSE, message=FALSE, fig.align="center"}
 
 dados %>% ggplot() +
@@ -382,10 +488,10 @@ dados %>% ggplot() +
 
 ```
 
-
-
 ---
-## Referências
+# Referências
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
 
 * __Noções de Probabilidade e Estatística__<br>
   Marcos Nascimento Magalhães e Antonio Carlos Pedroso de Lima<br>
@@ -401,7 +507,8 @@ dados %>% ggplot() +
 ---
 class: middle, center
 # Obrigada!
-@renata_mh<br>
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+[@renata_mh](https://twitter.com/renata_mh)<br>
 renata@voltdata.info<br>
 
-www.voltdata.info
+https://www.voltdata.info

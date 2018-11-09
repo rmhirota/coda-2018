@@ -188,7 +188,7 @@ Prever valores de uma variável (resposta) em função de outra (explicativa)
 --
 ## Ideia
 
-Ajustar uma equação de reta de forma a minimizar a soma das distâncias de cada ponto à reta
+Ajustar uma equação de reta de forma a minimizar a soma do quadrado das distâncias de cada ponto à reta
 
 ---
 
@@ -251,10 +251,10 @@ No nosso caso, queremos encontrar o valor de `sho` (Y) em função de `pas` (X) 
 
 &lt;img src="index_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
 ---
-## Minimizar a soma das distâncias de cada ponto
+## Minimizar a soma do quadrado das distâncias de cada ponto
 &lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
 
-A reta da regressão (vermelha) é a melhor reta entre todas, porque a soma da _distância_ de cada ponto em relação a ela é a __menor possível__.
+A reta da regressão (vermelha) é a melhor reta entre todas, porque a soma do quadrado da _distância_ de cada ponto em relação a ela é a __menor possível__.
 &lt;br&gt;&lt;br&gt;
 &lt;img src="imgs/minimosquadrados.png" height=340 style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
 
@@ -298,6 +298,12 @@ plot(x = var_explicativa, y = var_resposta)
 ```
 
 &lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+---
+## Suposições / hipóteses necessárias
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+### Exemplos de relações linear e não lineares
+
+&lt;img src="imgs/linear.png" style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
 
 ---
 ## Suposições / hipóteses necessárias
@@ -330,19 +336,170 @@ curve(dnorm(x, mean=0, sd=1), add = TRUE, col="red", lwd=2)
 &lt;img src="imgs/heteroscedasticidade.png" style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
 
 ---
-## Regressão linear?
-&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
-
-
-
-
-
----
 class: middle, center
 
 # Agora sim: vamos ao _RStudio_ !
 &lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
 
+---
+## Abra o RStudio e crie um novo script
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+&lt;img src="imgs/rstudio1.png" style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+
+---
+## Vamos dar uma olhada nos dados
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+
+```r
+# Carregando os dados
+dados &lt;- read.csv("dados/fifa_reduzido.csv")
+
+# Vamos dar uma olhada nas primeiras linhas
+head(dados)
+```
+
+```
+##       ID              name                club age height_cm weight_kg
+## 1  20801 Cristiano Ronaldo      Real Madrid CF  32       185        80
+## 2 158023          L. Messi        FC Barcelona  30       170        72
+## 3 190871            Neymar Paris Saint-Germain  25       175        68
+## 4 176580         L. Suárez        FC Barcelona  30       182        86
+## 5 167495          M. Neuer    FC Bayern Munich  31       193        92
+## 6 188545    R. Lewandowski    FC Bayern Munich  28       185        79
+##   nationality eur_value eur_wage eur_release_clause overall potential pac
+## 1    Portugal  9.55e+07   565000          195800000      94        94  90
+## 2   Argentina  1.05e+08   565000          215300000      93        93  89
+## 3      Brazil  1.23e+08   280000          236800000      92        94  92
+## 4     Uruguay  9.70e+07   510000          198900000      92        92  82
+## 5     Germany  6.10e+07   230000          100700000      92        92  91
+## 6      Poland  9.20e+07   355000          151800000      91        91  81
+##   sho pas dri def phy international_reputation skill_moves
+## 1  93  82  90  33  80                        5           5
+## 2  90  86  96  26  61                        5           4
+## 3  84  79  95  30  60                        5           5
+## 4  90  79  87  42  81                        5           4
+## 5  90  95  89  60  91                        5           1
+## 6  88  75  86  38  82                        4           3
+```
+---
+## Quanta coisa... Vamos ver só o nome, 'sho' e 'pas'?
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+```r
+dados2 &lt;- data.frame(nome = dados$name, sho = dados$sho, pas = dados$pas)
+head(dados2)
+```
+
+```
+##                nome sho pas
+## 1 Cristiano Ronaldo  93  82
+## 2          L. Messi  90  86
+## 3            Neymar  84  79
+## 4         L. Suárez  90  79
+## 5          M. Neuer  90  95
+## 6    R. Lewandowski  88  75
+```
+---
+## Plotando sho X pas
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+
+```r
+plot(x = dados2$pas, y = dados$sho)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+Parece linear! E _homoscedástico_
+
+---
+## Adicionando a reta de regressão
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+
+```r
+plot(x = dados2$pas, y = dados$sho)
+abline(lm(dados2$sho ~ dados2$pas), col="red")
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-11-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+## Valores de __a__ e __b__
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+
+```r
+lm(dados$sho ~ dados2$pas)
+```
+
+```
+## 
+## Call:
+## lm(formula = dados$sho ~ dados2$pas)
+## 
+## Coefficients:
+## (Intercept)   dados2$pas  
+##      4.0776       0.8588
+```
+--
+### Interpretação
+- __a__ (coeficiente angular): quanto a variação de `sho` influencia em `pas`
+- __b__ (intercepto): valor esperado de `sho` quando `pas` é igual a zero
+
+---
+## Alguns métodos de avaliação de qualidade do ajuste
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+- Coeficiente de determinação `\(R^2\)`
+- Gráficos de resíduos padronizados
+- Distância de Cook
+
+https://www.statmethods.net/stats/rdiagnostics.html
+
+---
+## Coeficiente de determinação `\(R^2\)`
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+`$$R^2 = \frac{SQReg}{SQTot} = 1 -\frac{SQRes}{SQTot}$$`
+em que &lt;br&gt;&lt;br&gt;
+`\(SQTot = \sum_{i=1}^n (y_i - \bar y)^2\)` &lt;br&gt;
+`\(SQReg = \sum{i=1}^n (\hat y_i - \bar y)^2\)` &lt;br&gt;
+`\(SQRes = \sum{i=1}^n (y_i - \hat y_i)^2\)`
+
+--
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;img src="imgs/what.gif" height=270 style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+
+---
+
+## Coeficiente de determinação `\(R^2\)`
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+O Coeficiente de determinação `\(R^2\)` mede o quanto da variabilidade da resposta é explicada pela regressão
+
+
+```r
+fit &lt;- lm(dados2$sho ~ dados2$pas)
+summary(fit)$r.squared
+```
+
+```
+## [1] 0.4222103
+```
+---
+## Distância de Cook
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+
+```r
+plot(fit, which=4)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-14-1.png" style="display: block; margin: auto;" /&gt;
+&lt;br&gt;
+Valores que se destacam no gráfico são chamados _pontos de alavanca_ e devem ser investigados
 
 ---
 ## Ex: área e valor de imóveis
@@ -484,14 +641,23 @@ class: middle, center
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+---
+class: middle, center
+## Tentem ajustar uma reta de regressão no R!
+
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+arquivo `imob.csv`
+---
+## Regressão linear: preço e área de imóveis
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+&lt;img src="index_files/figure-html/unnamed-chunk-16-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
-&lt;img src="index_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+# Referências
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
 
-
-
----
-## Referências
 
 * __Noções de Probabilidade e Estatística__&lt;br&gt;
   Marcos Nascimento Magalhães e Antonio Carlos Pedroso de Lima&lt;br&gt;
@@ -507,10 +673,11 @@ class: middle, center
 ---
 class: middle, center
 # Obrigada!
-@renata_mh&lt;br&gt;
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+[@renata_mh](https://twitter.com/renata_mh)&lt;br&gt;
 renata@voltdata.info&lt;br&gt;
 
-www.voltdata.info
+https://www.voltdata.info
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
