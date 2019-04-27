@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+  <head>
+    <title>Estatística básica e noções de inferência</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Renata Hirota | Volt Data Lab" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Estatística básica e noções de inferência
+### Renata Hirota | Volt Data Lab
+### 26 de abril de 2019
+
+---
+
+class: middle, center
+
+# Sobre o Volt Data Lab
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+
+---
+
+## Jornalismo + Dados
+&lt;br&gt;
+&lt;img src="imgs/volt.png" style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+---
+class: middle, center
+# Vamos à *estatística*
+&lt;img src="imgs/yay.gif" style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+---
+## O que é **estatística**?
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+--
+&lt;br&gt;
+Organizar, descrever, analisar e interpretar dados
+--
+&lt;br&gt;&lt;br&gt;
+- Estatística descritiva (descrever e resumir dados)
+- Probabilidade (teoria matemática para estudar a incerteza)
+- Inferência estatística (extrapolação de informações e conclusões a partir dos dados)
+
+
+---
+## Falando em inferência...
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+--
+&lt;br&gt;
+Dois conceitos: **amostra** e **população**
+--
+&lt;br&gt;&lt;br&gt;
+### População
+Conjunto de valores de uma característica observável associado a um grupo de indivíduos.&lt;br&gt;
+Exemplo: idade dos brasileiros
+--
+&lt;br&gt;&lt;br&gt;
+### Amostra
+Qualquer subconjunto de uma população.&lt;br&gt;
+Exemplo: idade das R-Ladies
+
+
+---
+
+## Mas e daí? 
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+--
+&lt;br&gt;
+Nem sempre é possível (ou desejável) obter informações diretamente da **população**.
+Utilizamos **amostras** para fazer suposições sobre a população e estudar suas características.
+--
+&lt;br&gt;&lt;br&gt;
+A **inferência** tem como objetivo estudar generalizações sobre uma população através de evidências fornecidas por uma amostra dessa população, inclusive medindo quão *incerta* é a generalização.
+
+&lt;img src="imgs/inferencia.png" height=280 style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+
+---
+
+## Suponha que você está fazendo uma sopa...
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+&lt;img src="imgs/sopa.jpg" style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+
+---
+&lt;br&gt;&lt;br&gt;
+### Como você sabe se a sopa precisa de mais sal?
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+--
+&lt;br&gt;
+Tomar a sopa inteira?&lt;br&gt;
+--
+Experimentar uma colher?
+
+--
+&lt;br&gt;
+### Depois de adicionar o sal, o que garante que a sopa como um todo estará mais salgada?
+--
+&lt;br&gt;
+Misturamos a sopa para que ela fique *homogênea* e, assim, qualquer *amostra* que retirarmos dela para experimentar seja representativa do todo.
+
+---
+## Resumindo:
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+População a ser estudada &lt;br&gt;&lt;br&gt;
+`\(\downarrow\)` &lt;br&gt;&lt;br&gt;
+Retira-se amostra(s) &lt;br&gt;&lt;br&gt;
+`\(\downarrow\)` &lt;br&gt;&lt;br&gt;
+Análise do conjunto de dados e conclusões!&lt;br&gt;&lt;br&gt;
+`\(\downarrow\)` &lt;br&gt;&lt;br&gt;
+Extrapolação de informações e conclusões sobre a amostra à população, *com um grau de incerteza*
+
+---
+## Voltando ao exemplo da __idade__
+--
+&lt;br&gt;
+Qual a _idade média_ dos brasileiros?
+Qual a _idade média_ das RLadies?
+--
+  
+  
+Se quiséssemos _inferir_ a idade de todos os brasileiros a partir de uma amostra (RLadies), quão representativa essa amostra seria?
+
+---
+## Quando o tamanho da amostra cresce...
+&lt;img src="index_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
+
+
+---
+class: middle, center
+# Voltando para a estatística descritiva: 
+
+alguns conceitos importantes
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+---
+## Medidas resumo
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+--
+&lt;br&gt;
+### Média
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+--
+&lt;br&gt;
+`\(\bar X = \frac{(X_1 + X_2 + X_3 + ... + X_N)}{N}\)`
+--
+&lt;br&gt;&lt;br&gt;
+Qual é a média do conjunto de dados a seguir?
+$$
+\matrix{5 &amp; 5 &amp; 5 &amp; 5 &amp; 5 &amp; 5}
+$$
+--
+E desse?
+$$
+\matrix{2 &amp; 8 &amp; 5 &amp; -1 &amp; 6 &amp; 10}
+$$
+---
+### Variância
+--
+&lt;br&gt;
+`\(Var(X) = \frac{(X_1 - \mu)^2 + ( X_2 - \mu)^2 + ... + (X_n - \mu)^2}{N}\)`
+--
+&lt;br&gt;&lt;br&gt;
+Qual a variância dos dados anteriores?
+$$
+\matrix{5 &amp; 5 &amp; 5 &amp; 5 &amp; 5 &amp; 5}
+$$
+&lt;br&gt;
+$$
+\matrix{2 &amp; 8 &amp; 5 &amp; -1 &amp; 6 &amp; 10}
+$$
+--
+&lt;br&gt;
+### Correlação (Pearson)
+--
+&lt;br&gt;
+`\(\rho_{X,Y} = \frac {cov(X,Y)}{\sqrt {var(X) \: var(Y)}} = \frac {\sum_{i=1}^n (x_i-\bar x)(y_i - \bar y)}{\sqrt {var(X) \: var(Y)}}\)`
+
+---
+## Mas, na prática...
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+`&gt; mean(x)`&lt;br&gt;
+`&gt; var(x)`&lt;br&gt;
+`&gt; cor(x,y)`
+
+&lt;img src="imgs/correlsheets.png" style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+
+---
+## Resumindo:
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+--
+&lt;br&gt;
+&lt;img src="imgs/math.gif" style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+&lt;br&gt;&lt;br&gt;
+Qualquer calculadora faz contas. &lt;br&gt;O importante é entender o que está acontecendo!
+
+---
+class: middle, center
+
+# Regressão linear simples
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+---
+## O que é regressão linear?
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+--
+Técnica para __quantificar__ a mudança observada em uma variável quando variamos o valor de outra.&lt;br&gt;
+--
+&lt;img src="index_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+## Motivação
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+Se sabemos que um certo município ou estado tem `TMI` igual a 20, quanto espera-se que seja a `Expectativa de vida` nessa região?
+
+--
+
+## O que queremos
+
+Prever valores de uma variável (resposta) em função de outra (explicativa)
+
+--
+## Ideia
+
+Ajustar uma equação de reta de forma a minimizar a soma das distâncias de cada ponto à reta
+
+---
+
+## Peraí, equação de reta?
+
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+--
+Y = **a**X + **b**
+
+em que
+
+- **a** é o *coeficiente angular*
+- **b** é o *coeficiente linear* ou *intercepto*
+--
+
+&lt;img src="imgs/reta1.png" style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+---
+## Peraí, equação de reta?
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+Y = **a**X + **b**
+
+em que
+
+- **a** é o *coeficiente angular*
+- **b** é o *coeficiente linear* ou *intercepto*
+
+&lt;img src="imgs/reta2.png" style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+
+---
+
+## Voltando à regressão
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+`$$Y = a\,X + b + erro$$`
+
+O método de regressão linear estima os coeficientes `\(a\)` e `\(b\)`, a partir dos pares `\((X, Y)\)` observados, em que
+
+* __X__ é a variável explicativa
+* __Y__ é a variável resposta
+* __erro__ é a diferença entre o valor esperado e o valor observado, para cada par (X, Y)
+
+No nosso caso, queremos encontrar o valor da `Expectativa` (Y) em função de `TMI` (X) &lt;br&gt;
+
+
+```r
+modelo &lt;- lm(Total ~ TMI, dados)
+modelo$coefficients
+```
+
+```
+## (Intercept)         TMI 
+##  82.4826222  -0.5323972
+```
+
+
+---
+## Mas por que __essa__ reta?
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+&lt;img src="index_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+---
+
+## Não poderia ser a reta azul?
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+&lt;img src="index_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+## Ou a verde?
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+---
+## Minimizar a soma das distâncias de cada ponto
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+A reta da regressão (vermelha) é a melhor reta entre todas, porque a soma da _distância_ de cada ponto em relação a ela é a __menor possível__. É o chamado _método de mínimos quadrados_.
+&lt;br&gt;&lt;br&gt;
+&lt;img src="imgs/minimosquadrados.png" height=340 style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+
+---
+## "Beleza, já entendi o que é regressão! Mãos à obra"
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+--
+
+&lt;img src="imgs/wait.gif" style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+
+---
+## Suposições / hipóteses necessárias
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+### Relação *linear* entre duas variáveis numéricas 
+Lembra do coeficiente de correlação de Pearson? Use-o. &lt;br&gt;
+
+
+```r
+var_explicativa &lt;- dados$TMI
+var_resposta &lt;- dados$Total
+cor(var_explicativa, var_resposta, method="pearson")
+```
+
+```
+## [1] -0.873016
+```
+--
+- Quanto mais próximo de __1__: mais _positivamente_ correlacionados
+- Quanto mais próximo de __-1__: mais _negativamente_ correlacionados
+- Quanto mais próximo de __0__: ausência de correlação
+---
+## Suposições / hipóteses necessárias
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+### Relação *linear* entre duas variáveis numéricas 
+
+&lt;img src="imgs/linear-nonlinear-corrrelation.jpg" height=340 style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+---
+## Suposições / hipóteses necessárias
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+Plotar os dados também ajuda a visualizar e ter uma ideia de como eles se relacionam.
+--
+
+```r
+plot(x = var_explicativa, y = var_resposta)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+## Suposições / hipóteses necessárias
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+### Distribuição normal dos erros
+Erros são aleatórios, com média igual a zero e variância constante
+
+```r
+hist(rnorm(1000, mean=0, sd=1), prob=TRUE)
+curve(dnorm(x, mean=0, sd=1), add = TRUE, col="red", lwd=2)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Distribuição normal dos erros
+Vamos comparar os resíduos (os erros da nossa amostra) com a distribuição normal:
+
+```r
+qqnorm(modelo$residuals)
+qqline(modelo$residuals)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
+---
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;img src="imgs/buguei.gif" style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+---
+## Na prática, os dados são mais ou menos assim...
+
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+&lt;img src="imgs/homoscedasticidade.png" style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+
+---
+## ...e não assim
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+&lt;img src="imgs/heteroscedasticidade.png" style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
+
+---
+## Regressão linear?
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+
+
+
+
+---
+class: middle, center
+
+# Agora sim: vamos ao _RStudio_ !
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+
+---
+## Ex: área e valor de imóveis
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+
+&lt;table class="kable_wrapper"&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td&gt; 
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; id &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; area &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; valor &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 1 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 69 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 410 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 2 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 415 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 3 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 63 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 316 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 4 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 67 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 480 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 5 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 65 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 400 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 6 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 82 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 640 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 7 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 53 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 265 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 8 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 60 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 350 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 9 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 62 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 430 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 10 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 95 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 640 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+ &lt;/td&gt;
+   &lt;td&gt; 
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;"&gt; id &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; area &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; valor &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 11 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 49 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 225 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 12 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 54 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 225 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 13 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 49 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 230 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 14 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 49 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 230 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 15 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 256 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 16 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 49 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 260 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 17 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 53 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 265 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 18 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 270 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 19 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 63 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 319 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 20 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 61 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 348 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+ &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+---
+&lt;img src="index_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
+
+
+
+---
+## Referências
+
+* __Noções de Probabilidade e Estatística__&lt;br&gt;
+  Marcos Nascimento Magalhães e Antonio Carlos Pedroso de Lima&lt;br&gt;
+  https://www.ime.usp.br/~noproest
+  
+* __Estatística Básica__&lt;br&gt;
+  Wilton O. Bussab e Pedro A.Morettin&lt;br&gt;
+  [PDF](https://edisciplinas.usp.br/pluginfile.php/4445638/mod_resource/content/1/Book_EstatBas%20-%20Morettin%20%20Bussab.pdf)
+  
+* __Penn State__ &lt;br&gt;
+  Curso STAT 414 &lt;br&gt;
+  https://onlinecourses.science.psu.edu/stat414/
+
+* __Linear regression in real life__&lt;br&gt;
+  https://link.medium.com/JTDsTwbZAR
+
+---
+class: middle, center
+# Obrigada!
+@renata_mh&lt;br&gt;
+renata@voltdata.info&lt;br&gt;
+
+www.voltdata.info
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

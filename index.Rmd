@@ -1,0 +1,485 @@
+---
+title: "Estatística básica e noções de inferência"
+author: "Renata Hirota | Volt Data Lab"
+date: "26 de abril de 2019"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: middle, center
+
+# Sobre o Volt Data Lab
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+
+---
+
+## Jornalismo + Dados
+<br>
+<img src="imgs/volt.png" style=" display: block; margin-left: auto; margin-right: auto;"></img>
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+---
+class: middle, center
+# Vamos à *estatística*
+<img src="imgs/yay.gif" style=" display: block; margin-left: auto; margin-right: auto;"></img>
+
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+---
+## O que é **estatística**?
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+--
+<br>
+Organizar, descrever, analisar e interpretar dados
+--
+<br><br>
+- Estatística descritiva (descrever e resumir dados)
+- Probabilidade (teoria matemática para estudar a incerteza)
+- Inferência estatística (extrapolação de informações e conclusões a partir dos dados)
+
+
+---
+## Falando em inferência...
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+--
+<br>
+Dois conceitos: **amostra** e **população**
+--
+<br><br>
+### População
+Conjunto de valores de uma característica observável associado a um grupo de indivíduos.<br>
+Exemplo: idade dos brasileiros
+--
+<br><br>
+### Amostra
+Qualquer subconjunto de uma população.<br>
+Exemplo: idade das R-Ladies
+
+
+---
+
+## Mas e daí? 
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+--
+<br>
+Nem sempre é possível (ou desejável) obter informações diretamente da **população**.
+Utilizamos **amostras** para fazer suposições sobre a população e estudar suas características.
+--
+<br><br>
+A **inferência** tem como objetivo estudar generalizações sobre uma população através de evidências fornecidas por uma amostra dessa população, inclusive medindo quão *incerta* é a generalização.
+
+<img src="imgs/inferencia.png" height=280 style=" display: block; margin-left: auto; margin-right: auto;"></img>
+
+---
+
+## Suponha que você está fazendo uma sopa...
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+<img src="imgs/sopa.jpg" style=" display: block; margin-left: auto; margin-right: auto;"></img>
+
+---
+<br><br>
+### Como você sabe se a sopa precisa de mais sal?
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+--
+<br>
+Tomar a sopa inteira?<br>
+--
+Experimentar uma colher?
+
+--
+<br>
+### Depois de adicionar o sal, o que garante que a sopa como um todo estará mais salgada?
+--
+<br>
+Misturamos a sopa para que ela fique *homogênea* e, assim, qualquer *amostra* que retirarmos dela para experimentar seja representativa do todo.
+
+---
+## Resumindo:
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+População a ser estudada <br><br>
+$\downarrow$ <br><br>
+Retira-se amostra(s) <br><br>
+$\downarrow$ <br><br>
+Análise do conjunto de dados e conclusões!<br><br>
+$\downarrow$ <br><br>
+Extrapolação de informações e conclusões sobre a amostra à população, *com um grau de incerteza*
+
+---
+## Voltando ao exemplo da __idade__
+--
+<br>
+Qual a _idade média_ dos brasileiros?
+Qual a _idade média_ das RLadies?
+--
+  
+  
+Se quiséssemos _inferir_ a idade de todos os brasileiros a partir de uma amostra (RLadies), quão representativa essa amostra seria?
+
+---
+## Quando o tamanho da amostra cresce...
+```{r echo=FALSE, message=FALSE, fig.height = 5, fig.width = 9, fig.align = "center"}
+x <- c()
+media <- c()
+for (i in seq(1,1000)) {
+  x_novo <- runif(1,min=-1, max=1)
+  x <- append(x,x_novo)
+  media <- append(media,mean(x))
+}
+
+plot(seq(1,1000),media, type = "l")
+```
+
+
+---
+class: middle, center
+# Voltando para a estatística descritiva: 
+
+alguns conceitos importantes
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+---
+## Medidas resumo
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+--
+<br>
+### Média
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+--
+<br>
+$\bar X = \frac{(X_1 + X_2 + X_3 + ... + X_N)}{N}$
+--
+<br><br>
+Qual é a média do conjunto de dados a seguir?
+$$
+\matrix{5 & 5 & 5 & 5 & 5 & 5}
+$$
+--
+E desse?
+$$
+\matrix{2 & 8 & 5 & -1 & 6 & 10}
+$$
+---
+### Variância
+--
+<br>
+$Var(X) = \frac{(X_1 - \mu)^2 + ( X_2 - \mu)^2 + ... + (X_n - \mu)^2}{N}$
+--
+<br><br>
+Qual a variância dos dados anteriores?
+$$
+\matrix{5 & 5 & 5 & 5 & 5 & 5}
+$$
+<br>
+$$
+\matrix{2 & 8 & 5 & -1 & 6 & 10}
+$$
+--
+<br>
+### Correlação (Pearson)
+--
+<br>
+$\rho_{X,Y} = \frac {cov(X,Y)}{\sqrt {var(X) \: var(Y)}} = \frac {\sum_{i=1}^n (x_i-\bar x)(y_i - \bar y)}{\sqrt {var(X) \: var(Y)}}$
+
+---
+## Mas, na prática...
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+`> mean(x)`<br>
+`> var(x)`<br>
+`> cor(x,y)`
+
+<img src="imgs/correlsheets.png" style=" display: block; margin-left: auto; margin-right: auto;"></img>
+
+---
+## Resumindo:
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+--
+<br>
+<img src="imgs/math.gif" style=" display: block; margin-left: auto; margin-right: auto;"></img>
+<br><br>
+Qualquer calculadora faz contas. <br>O importante é entender o que está acontecendo!
+
+---
+class: middle, center
+
+# Regressão linear simples
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+---
+## O que é regressão linear?
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+--
+Técnica para __quantificar__ a mudança observada em uma variável quando variamos o valor de outra.<br>
+--
+```{r echo=FALSE, message=FALSE, fig.height = 5, fig.width = 9, fig.align = "center"}
+library(dplyr)
+library(readr)
+library(ggplot2)
+dados <- read_csv("dados/expectativa.csv")
+dados %>% ggplot() +
+  geom_point(aes(x = TMI, y = Total)) +
+  geom_smooth(aes(x = TMI, y = Total),method = "lm", formula = y ~ x, color = "red") +
+  labs(x = "TMI", y = "Expectativa", title = "Expectativa de vida x Taxa de mortalidade infantil") +
+  theme_bw()
+```
+
+---
+## Motivação
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+Se sabemos que um certo município ou estado tem `TMI` igual a 20, quanto espera-se que seja a `Expectativa de vida` nessa região?
+
+--
+
+## O que queremos
+
+Prever valores de uma variável (resposta) em função de outra (explicativa)
+
+--
+## Ideia
+
+Ajustar uma equação de reta de forma a minimizar a soma das distâncias de cada ponto à reta
+
+---
+
+## Peraí, equação de reta?
+
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+--
+Y = **a**X + **b**
+
+em que
+
+- **a** é o *coeficiente angular*
+- **b** é o *coeficiente linear* ou *intercepto*
+--
+
+<img src="imgs/reta1.png" style=" display: block; margin-left: auto; margin-right: auto;"></img>
+---
+## Peraí, equação de reta?
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+Y = **a**X + **b**
+
+em que
+
+- **a** é o *coeficiente angular*
+- **b** é o *coeficiente linear* ou *intercepto*
+
+<img src="imgs/reta2.png" style=" display: block; margin-left: auto; margin-right: auto;"></img>
+
+---
+
+## Voltando à regressão
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+$$Y = a\,X + b + erro$$
+
+O método de regressão linear estima os coeficientes $a$ e $b$, a partir dos pares $(X, Y)$ observados, em que
+
+* __X__ é a variável explicativa
+* __Y__ é a variável resposta
+* __erro__ é a diferença entre o valor esperado e o valor observado, para cada par (X, Y)
+
+No nosso caso, queremos encontrar o valor da `Expectativa` (Y) em função de `TMI` (X) <br>
+
+```{r}
+modelo <- lm(Total ~ TMI, dados)
+modelo$coefficients
+
+```
+
+
+---
+## Mas por que __essa__ reta?
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+```{r echo=FALSE, message=FALSE, fig.height = 6, fig.width = 9, fig.align = "center"}
+library(tidyverse)
+library(ggplot2)
+dados <- read_csv("dados/expectativa.csv")
+dados %>% ggplot() +
+  geom_point(aes(x = TMI, y = Total)) +
+  geom_smooth(aes(x = TMI, y = Total),method = "lm", formula = y ~ x, color = "red", se = FALSE) +
+  labs(x = "TMI", y = "Expectativa", title = "Expectativa de vida x Taxa de mortalidade infantil") +
+  theme_bw()
+
+```
+---
+
+## Não poderia ser a reta azul?
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+```{r echo=FALSE, message=FALSE, fig.height = 6, fig.width = 9, fig.align = "center"}
+dados %>% ggplot() +
+  geom_point(aes(x = TMI, y = Total)) +
+  geom_smooth(aes(x = TMI, y = Total),method = "lm", formula = y ~ x, color = "red", se=FALSE) +
+  geom_abline(intercept = 85, slope = -0.65, color = "blue", size = 1.4) +
+  labs(x = "TMI", y = "Expectativa", title = "Expectativa de vida x Taxa de mortalidade infantil") +
+    theme_bw()
+```
+
+---
+## Ou a verde?
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+```{r echo=FALSE, message=FALSE, fig.height = 6, fig.width = 9, fig.align = "center"}
+dados %>% ggplot() +
+  geom_point(aes(x = TMI, y = Total)) +
+  geom_smooth(aes(x = TMI, y = Total),method = "lm", formula = y ~ x, color = "red", se=FALSE) +
+  geom_abline(intercept = 85, slope = -0.65, color = "blue", size = 1.4) +
+  geom_abline(intercept = 80, slope = -0.4, color = "green", size = 1.4) +
+  labs(x = "TMI", y = "Expectativa", title = "Expectativa de vida x Taxa de mortalidade infantil") +
+  theme_bw()
+```
+---
+## Minimizar a soma das distâncias de cada ponto
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+A reta da regressão (vermelha) é a melhor reta entre todas, porque a soma da _distância_ de cada ponto em relação a ela é a __menor possível__. É o chamado _método de mínimos quadrados_.
+<br><br>
+<img src="imgs/minimosquadrados.png" height=340 style=" display: block; margin-left: auto; margin-right: auto;"></img>
+
+---
+## "Beleza, já entendi o que é regressão! Mãos à obra"
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+--
+
+<img src="imgs/wait.gif" style=" display: block; margin-left: auto; margin-right: auto;"></img>
+
+---
+## Suposições / hipóteses necessárias
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+### Relação *linear* entre duas variáveis numéricas 
+Lembra do coeficiente de correlação de Pearson? Use-o. <br>
+
+```{r}
+var_explicativa <- dados$TMI
+var_resposta <- dados$Total
+cor(var_explicativa, var_resposta, method="pearson")
+```
+--
+- Quanto mais próximo de __1__: mais _positivamente_ correlacionados
+- Quanto mais próximo de __-1__: mais _negativamente_ correlacionados
+- Quanto mais próximo de __0__: ausência de correlação
+---
+## Suposições / hipóteses necessárias
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+### Relação *linear* entre duas variáveis numéricas 
+
+<img src="imgs/linear-nonlinear-corrrelation.jpg" height=340 style=" display: block; margin-left: auto; margin-right: auto;"></img>
+---
+## Suposições / hipóteses necessárias
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+Plotar os dados também ajuda a visualizar e ter uma ideia de como eles se relacionam.
+--
+```{r fig.align="center", fig.height=5}
+plot(x = var_explicativa, y = var_resposta)
+```
+
+---
+## Suposições / hipóteses necessárias
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+### Distribuição normal dos erros
+Erros são aleatórios, com média igual a zero e variância constante
+```{r fig.height=4, fig.align="center"}
+hist(rnorm(1000, mean=0, sd=1), prob=TRUE)
+curve(dnorm(x, mean=0, sd=1), add = TRUE, col="red", lwd=2)
+```
+
+---
+
+### Distribuição normal dos erros
+Vamos comparar os resíduos (os erros da nossa amostra) com a distribuição normal:
+```{r fig.height=4, fig.align="center"}
+qqnorm(modelo$residuals)
+qqline(modelo$residuals)
+```
+---
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+<br><br><br><br><br>
+<img src="imgs/buguei.gif" style=" display: block; margin-left: auto; margin-right: auto;"></img>
+---
+## Na prática, os dados são mais ou menos assim...
+
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+<img src="imgs/homoscedasticidade.png" style=" display: block; margin-left: auto; margin-right: auto;"></img>
+
+---
+## ...e não assim
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+<img src="imgs/heteroscedasticidade.png" style=" display: block; margin-left: auto; margin-right: auto;"></img>
+
+---
+## Regressão linear?
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+
+
+
+
+---
+class: middle, center
+
+# Agora sim: vamos ao _RStudio_ !
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+
+---
+## Ex: área e valor de imóveis
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
+
+```{r echo=FALSE, message=FALSE, fig.show = "hold",fig.align="center"}
+dados <- read_csv("dados/imob.csv")
+t1 <- dados %>% head(10)
+t2 <- dados %>% tail(10) 
+knitr::kable(list(t1,t2), format = "html")
+
+```
+
+---
+```{r echo=FALSE, message=FALSE, fig.align="center"}
+
+dados %>% ggplot() +
+  geom_point(aes(x = area, y = valor)) +
+  geom_smooth(aes(x = area, y = valor),method = "lm", formula = y ~ x, color = "red") +
+  labs(x = "Área do imóvel (em metros quadrados)", y = "Valor do imóvel (em milhares de reais)") +
+  theme_bw()
+
+```
+
+
+
+---
+## Referências
+
+* __Noções de Probabilidade e Estatística__<br>
+  Marcos Nascimento Magalhães e Antonio Carlos Pedroso de Lima<br>
+  https://www.ime.usp.br/~noproest
+  
+* __Estatística Básica__<br>
+  Wilton O. Bussab e Pedro A.Morettin<br>
+  [PDF](https://edisciplinas.usp.br/pluginfile.php/4445638/mod_resource/content/1/Book_EstatBas%20-%20Morettin%20%20Bussab.pdf)
+  
+* __Penn State__ <br>
+  Curso STAT 414 <br>
+  https://onlinecourses.science.psu.edu/stat414/
+
+* __Linear regression in real life__<br>
+  https://link.medium.com/JTDsTwbZAR
+
+---
+class: middle, center
+# Obrigada!
+@renata_mh<br>
+renata@voltdata.info<br>
+
+www.voltdata.info
