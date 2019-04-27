@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
   <head>
-    <title>Regressão linear? Inferência? Saia do básico para nunca mais errar em estatística</title>
-    <meta charset="utf-8">
+    <title>Estatística básica e noções de inferência</title>
+    <meta charset="utf-8" />
     <meta name="author" content="Renata Hirota | Volt Data Lab" />
     <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
     <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
@@ -11,9 +11,9 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Regressão linear? Inferência? Saia do básico para nunca mais errar em estatística
+# Estatística básica e noções de inferência
 ### Renata Hirota | Volt Data Lab
-### 10 de novembro de 2018
+### 26 de abril de 2019
 
 ---
 
@@ -63,7 +63,8 @@ Exemplo: idade dos brasileiros
 &lt;br&gt;&lt;br&gt;
 ### Amostra
 Qualquer subconjunto de uma população.&lt;br&gt;
-Exemplo: idade dos participantes do Coda; idade das pessoas neste workshop
+Exemplo: idade das R-Ladies
+
 
 ---
 
@@ -116,22 +117,52 @@ Análise do conjunto de dados e conclusões!&lt;br&gt;&lt;br&gt;
 Extrapolação de informações e conclusões sobre a amostra à população, *com um grau de incerteza*
 
 ---
+## Voltando ao exemplo da __idade__
+--
+&lt;br&gt;
+Qual a _idade média_ dos brasileiros?
+Qual a _idade média_ das RLadies?
+--
+  
+  
+Se quiséssemos _inferir_ a idade de todos os brasileiros a partir de uma amostra (RLadies), quão representativa essa amostra seria?
+
+
+---
 class: middle, center
-# Alguns conceitos importantes
+# Voltando para a estatística descritiva: 
+
+alguns conceitos importantes
 &lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
 ---
+## Medidas resumo
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
+--
+&lt;br&gt;
 ### Média
 &lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
 --
 &lt;br&gt;
 `\(\bar X = \frac{(X_1 + X_2 + X_3 + ... + X_N)}{N}\)`
-
 --
-&lt;br&gt;
+&lt;br&gt;&lt;br&gt;
+Qual é a média do conjunto de dados a seguir?
+$$
+\matrix{5 &amp; 5 &amp; 5 &amp; 5 &amp; 5 &amp; 5}
+$$
+--
+E desse?
+$$
+\matrix{2 &amp; 8 &amp; 5 &amp; -1 &amp; 6 &amp; 10}
+$$
+---
 ### Variância
 --
 &lt;br&gt;
 `\(Var(X) = \frac{(X_1 - \mu)^2 + ( X_2 - \mu)^2 + ... + (X_n - \mu)^2}{N}\)`
+--
+&lt;br&gt;
+Qual a variância do
 --
 &lt;br&gt;
 ### Correlação (Pearson)
@@ -171,13 +202,11 @@ Técnica para __quantificar__ a mudança observada em uma variável quando varia
 --
 &lt;img src="index_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
 
-
-Dados: https://www.kaggle.com/vmhatre7686/linear-regression-problems/data
 ---
 ## Motivação
 &lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
 
-Se eu sei que um jogador tem o atributo `pass` igual a 80, quanto espera-se que seja o seu atributo `shoot`?
+Se sabemos que um certo município ou estado tem `TMI` igual a 20, quanto espera-se que seja a `Expectativa de vida` nessa região?
 
 --
 
@@ -231,10 +260,10 @@ O método de regressão linear estima os coeficientes `\(a\)` e `\(b\)`, a parti
 * __Y__ é a variável resposta
 * __erro__ é a diferença entre o valor esperado e o valor observado, para cada par (X, Y)
 
-No nosso caso, queremos encontrar o valor de `sho` (Y) em função de `pas` (X) &lt;br&gt;
+No nosso caso, queremos encontrar o valor da `Expectativa` (Y) em função de `TMI` (X) &lt;br&gt;
 
 ---
-## E por que __essa__ reta?
+## Mas por que __essa__ reta?
 &lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
 
 &lt;img src="index_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
@@ -254,7 +283,7 @@ No nosso caso, queremos encontrar o valor de `sho` (Y) em função de `pas` (X) 
 ## Minimizar a soma das distâncias de cada ponto
 &lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
 
-A reta da regressão (vermelha) é a melhor reta entre todas, porque a soma da _distância_ de cada ponto em relação a ela é a __menor possível__.
+A reta da regressão (vermelha) é a melhor reta entre todas, porque a soma da _distância_ de cada ponto em relação a ela é a __menor possível__. É o chamado _método de mínimos quadrados_.
 &lt;br&gt;&lt;br&gt;
 &lt;img src="imgs/minimosquadrados.png" height=340 style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
 
@@ -273,13 +302,13 @@ Lembra do coeficiente de correlação de Pearson? Use-o. &lt;br&gt;
 
 
 ```r
-var_explicativa &lt;- c(1,2,3,4,5,6,7,8,9,10)
-var_resposta &lt;- c(1,3,7,8,12,12,14,15,17,22)
+var_explicativa &lt;- dados$TMI
+var_resposta &lt;- dados$Total
 cor(var_explicativa, var_resposta, method="pearson")
 ```
 
 ```
-## [1] 0.9834809
+## [1] -0.873016
 ```
 --
 - Quanto mais próximo de __1__: mais _positivamente_ correlacionados
@@ -497,6 +526,10 @@ class: middle, center
   Marcos Nascimento Magalhães e Antonio Carlos Pedroso de Lima&lt;br&gt;
   https://www.ime.usp.br/~noproest
   
+* __Estatística Básica__&lt;br&gt;
+  Wilton O. Bussab e Pedro A.Morettin&lt;br&gt;
+  [PDF](https://edisciplinas.usp.br/pluginfile.php/4445638/mod_resource/content/1/Book_EstatBas%20-%20Morettin%20%20Bussab.pdf)
+  
 * __Penn State__ &lt;br&gt;
   Curso STAT 414 &lt;br&gt;
   https://onlinecourses.science.psu.edu/stat414/
@@ -512,6 +545,7 @@ renata@voltdata.info&lt;br&gt;
 
 www.voltdata.info
     </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "highlightStyle": "github",
@@ -521,16 +555,57 @@ www.voltdata.info
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
-(function() {
-  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
   if (!r) return;
   s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
   d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
 })();</script>
 
 <script>
 (function() {
-  var i, text, code, codes = document.getElementsByTagName('code');
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
   for (i = 0; i < codes.length;) {
     code = codes[i];
     if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
@@ -544,14 +619,15 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     }
     i++;
   }
-})();
+};
+slideshow._releaseMath(document);
 </script>
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);
