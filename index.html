@@ -127,6 +127,10 @@ Qual a _idade média_ das RLadies?
   
 Se quiséssemos _inferir_ a idade de todos os brasileiros a partir de uma amostra (RLadies), quão representativa essa amostra seria?
 
+---
+## Quando o tamanho da amostra cresce...
+&lt;img src="index_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
+
 
 ---
 class: middle, center
@@ -161,8 +165,15 @@ $$
 &lt;br&gt;
 `\(Var(X) = \frac{(X_1 - \mu)^2 + ( X_2 - \mu)^2 + ... + (X_n - \mu)^2}{N}\)`
 --
+&lt;br&gt;&lt;br&gt;
+Qual a variância dos dados anteriores?
+$$
+\matrix{5 &amp; 5 &amp; 5 &amp; 5 &amp; 5 &amp; 5}
+$$
 &lt;br&gt;
-Qual a variância do
+$$
+\matrix{2 &amp; 8 &amp; 5 &amp; -1 &amp; 6 &amp; 10}
+$$
 --
 &lt;br&gt;
 ### Correlação (Pearson)
@@ -200,7 +211,7 @@ class: middle, center
 --
 Técnica para __quantificar__ a mudança observada em uma variável quando variamos o valor de outra.&lt;br&gt;
 --
-&lt;img src="index_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ## Motivação
@@ -262,23 +273,35 @@ O método de regressão linear estima os coeficientes `\(a\)` e `\(b\)`, a parti
 
 No nosso caso, queremos encontrar o valor da `Expectativa` (Y) em função de `TMI` (X) &lt;br&gt;
 
+
+```r
+modelo &lt;- lm(Total ~ TMI, dados)
+modelo$coefficients
+```
+
+```
+## (Intercept)         TMI 
+##  82.4826222  -0.5323972
+```
+
+
 ---
 ## Mas por que __essa__ reta?
 &lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
 
-&lt;img src="index_files/figure-html/unnamed-chunk-2-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
 ---
 
 ## Não poderia ser a reta azul?
 &lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
 
-&lt;img src="index_files/figure-html/unnamed-chunk-3-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-5-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ## Ou a verde?
 &lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
 
-&lt;img src="index_files/figure-html/unnamed-chunk-4-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
 ---
 ## Minimizar a soma das distâncias de cada ponto
 &lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
@@ -314,7 +337,13 @@ cor(var_explicativa, var_resposta, method="pearson")
 - Quanto mais próximo de __1__: mais _positivamente_ correlacionados
 - Quanto mais próximo de __-1__: mais _negativamente_ correlacionados
 - Quanto mais próximo de __0__: ausência de correlação
+---
+## Suposições / hipóteses necessárias
+&lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
 
+### Relação *linear* entre duas variáveis numéricas 
+
+&lt;img src="imgs/linear-nonlinear-corrrelation.jpg" height=340 style=" display: block; margin-left: auto; margin-right: auto;"&gt;&lt;/img&gt;
 ---
 ## Suposições / hipóteses necessárias
 &lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
@@ -326,7 +355,7 @@ Plotar os dados também ajuda a visualizar e ter uma ideia de como eles se relac
 plot(x = var_explicativa, y = var_resposta)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-6-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-8-1.png" style="display: block; margin: auto;" /&gt;
 
 ---
 ## Suposições / hipóteses necessárias
@@ -340,7 +369,19 @@ hist(rnorm(1000, mean=0, sd=1), prob=TRUE)
 curve(dnorm(x, mean=0, sd=1), add = TRUE, col="red", lwd=2)
 ```
 
-&lt;img src="index_files/figure-html/unnamed-chunk-7-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+### Distribuição normal dos erros
+Vamos comparar os resíduos (os erros da nossa amostra) com a distribuição normal:
+
+```r
+qqnorm(modelo$residuals)
+qqline(modelo$residuals)
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-10-1.png" style="display: block; margin: auto;" /&gt;
 ---
 &lt;img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"&gt;&lt;/img&gt;
 &lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;
@@ -515,7 +556,7 @@ class: middle, center
 &lt;/table&gt;
 
 ---
-&lt;img src="index_files/figure-html/unnamed-chunk-9-1.png" style="display: block; margin: auto;" /&gt;
+&lt;img src="index_files/figure-html/unnamed-chunk-12-1.png" style="display: block; margin: auto;" /&gt;
 
 
 

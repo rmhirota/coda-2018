@@ -120,6 +120,20 @@ Qual a _idade média_ das RLadies?
   
 Se quiséssemos _inferir_ a idade de todos os brasileiros a partir de uma amostra (RLadies), quão representativa essa amostra seria?
 
+---
+## Quando o tamanho da amostra cresce...
+```{r echo=FALSE, message=FALSE, fig.height = 5, fig.width = 9, fig.align = "center"}
+x <- c()
+media <- c()
+for (i in seq(1,1000)) {
+  x_novo <- runif(1,min=-1, max=1)
+  x <- append(x,x_novo)
+  media <- append(media,mean(x))
+}
+
+plot(seq(1,1000),media, type = "l")
+```
+
 
 ---
 class: middle, center
@@ -154,8 +168,15 @@ $$
 <br>
 $Var(X) = \frac{(X_1 - \mu)^2 + ( X_2 - \mu)^2 + ... + (X_n - \mu)^2}{N}$
 --
+<br><br>
+Qual a variância dos dados anteriores?
+$$
+\matrix{5 & 5 & 5 & 5 & 5 & 5}
+$$
 <br>
-Qual a variância do
+$$
+\matrix{2 & 8 & 5 & -1 & 6 & 10}
+$$
 --
 <br>
 ### Correlação (Pearson)
@@ -266,7 +287,9 @@ O método de regressão linear estima os coeficientes $a$ e $b$, a partir dos pa
 No nosso caso, queremos encontrar o valor da `Expectativa` (Y) em função de `TMI` (X) <br>
 
 ```{r}
-lm(Total ~ TMI, dados)
+modelo <- lm(Total ~ TMI, dados)
+modelo$coefficients
+
 ```
 
 
@@ -342,7 +365,13 @@ cor(var_explicativa, var_resposta, method="pearson")
 - Quanto mais próximo de __1__: mais _positivamente_ correlacionados
 - Quanto mais próximo de __-1__: mais _negativamente_ correlacionados
 - Quanto mais próximo de __0__: ausência de correlação
+---
+## Suposições / hipóteses necessárias
+<img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
 
+### Relação *linear* entre duas variáveis numéricas 
+
+<img src="imgs/linear-nonlinear-corrrelation.jpg" height=340 style=" display: block; margin-left: auto; margin-right: auto;"></img>
 ---
 ## Suposições / hipóteses necessárias
 <img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
@@ -362,6 +391,15 @@ Erros são aleatórios, com média igual a zero e variância constante
 ```{r fig.height=4, fig.align="center"}
 hist(rnorm(1000, mean=0, sd=1), prob=TRUE)
 curve(dnorm(x, mean=0, sd=1), add = TRUE, col="red", lwd=2)
+```
+
+---
+
+### Distribuição normal dos erros
+Vamos comparar os resíduos (os erros da nossa amostra) com a distribuição normal:
+```{r fig.height=4, fig.align="center"}
+qqnorm(modelo$residuals)
+qqline(modelo$residuals)
 ```
 ---
 <img src="https://static1.squarespace.com/static/551da417e4b05f67005d6abe/t/58f8173a1e5b6ca0cc4339f0/1541080220923/?format=100w" style=" display: block; margin-left: auto; margin-right: auto; position: absolute; top: 16px; right: 16px; opacity: 0.5"></img>
